@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk4uu8saq5f7v"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_33t05"]
+[ext_resource type="Texture2D" uid="uid://drkdcp7jb6ov5" path="res://icon.svg" id="2_kxlkc"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_33t05")
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="Player1" type="Sprite2D" parent="Arena"]
+position = Vector2(260, 163)
+texture = ExtResource("2_kxlkc")
+
+[node name="Player2" type="Sprite2D" parent="Arena"]
+position = Vector2(851, 453)
+texture = ExtResource("2_kxlkc")
+
+[node name="ChangePlayer" type="TextureButton" parent="."]
+offset_right = 124.0
+offset_bottom = 52.0
+
+[node name="Label" type="Label" parent="ChangePlayer"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(2, 2)
+text = "Player 1"
+
+[node name="Ping" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1152.0
+offset_right = -576.0
+offset_bottom = 26.0
+grow_horizontal = 0
+scale = Vector2(2, 2)
+text = "Server ping: "
+horizontal_alignment = 1
+
+[node name="PingTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="pressed" from="ChangePlayer" to="." method="_on_change_player_pressed"]
+[connection signal="timeout" from="PingTimer" to="." method="_on_ping_timer_timeout"]
