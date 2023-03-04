@@ -11,7 +11,7 @@ var time = 0
 func _on_ping_timer_timeout():
 	time = Time.get_ticks_msec()
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
-		socket.send_text("test ping")
+		socket.send_text(str(player_num)+"test ping")
 
 var player_num = 1
 var last_position
@@ -45,7 +45,7 @@ func _process(delta):
 			# взять последний пакет из пула и преобразовать его в строку
 			var packet_str = socket.get_packet().get_string_from_utf8()
 			# если это проверка пинга
-			if packet_str == "test ping":
+			if packet_str == str(player_num)+"test ping":
 				$Ping.text = "Server ping: "+str(Time.get_ticks_msec()-time)
 			# если это данные о другом игроке
 			else:
