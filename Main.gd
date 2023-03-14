@@ -44,15 +44,15 @@ func _process(delta):
 		while socket.get_available_packet_count():
 			# взять последний пакет из пула и преобразовать его в строку
 			var packet_str = socket.get_packet().get_string_from_utf8()
-			# если это проверка пинга
-			if packet_str == str(player_num)+"test ping":
-				$Ping.text = "Server ping: "+str(Time.get_ticks_msec()-time)
 			# если это данные о другом игроке
-			else:
+			if "[" in packet_str:
 				var packet = JSON.parse_string(packet_str)
 				if packet[0] != player_num:
 					var friend_player = get_node("Arena/Player"+str(packet[0]))
 					friend_player.position = Vector2(packet[1], packet[2])
+			# если это проверка пинга
+			elif packet_str == str(player_num)+"test ping":
+				$Ping.text = "Server ping: "+str(Time.get_ticks_msec()-time)
 	# если сокет закрыт
 	elif state == WebSocketPeer.STATE_CLOSED:
 		print("WebSocket closed")
